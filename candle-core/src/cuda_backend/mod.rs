@@ -1789,13 +1789,7 @@ impl BackendStorage for CudaStorage {
             (CudaStorageSlice::BF16(lhs), CudaStorageSlice::BF16(rhs)) => {
                 let lhs = &lhs.slice(lhs_l.start_offset()..);
                 let rhs = &rhs.slice(rhs_l.start_offset()..);
-                let cfg = gemm_config_no_batch(
-                    bf16::from_f64(scale.unwrap_or(1.)),
-                    bf16::ZERO,
-                    (m, n, k),
-                    lhs_l,
-                    rhs_l,
-                )?;
+                let cfg = gemm_config_no_batch(bf16::ONE, bf16::ZERO, (m, n, k), lhs_l, rhs_l)?;
                 let mut out = unsafe { dev.alloc::<bf16>(elem_count) }.w()?;
                 unsafe { gemm_bf16(&self.device.blas, cfg, rhs, lhs, &mut out) }.w()?;
                 CudaStorageSlice::BF16(out)
