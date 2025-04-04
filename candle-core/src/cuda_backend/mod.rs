@@ -1140,7 +1140,7 @@ fn gemm_config<T>(
 fn gemm_config_no_batch<T>(
     alpha: T,
     beta: T,
-    (m, n, k): (usize, usize, usize, usize),
+    (m, n, k): (usize, usize, usize),
     lhs_l: &Layout,
     rhs_l: &Layout,
 ) -> Result<GemmConfig<T>> {
