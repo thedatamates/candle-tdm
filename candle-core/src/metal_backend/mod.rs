@@ -1572,9 +1572,7 @@ impl BackendStorage for MetalStorage {
         _lhs_l: &Layout,
         _rhs_l: &Layout,
     ) -> Result<Self> {
-        Err(Error::Msg(
-            "no metal support for matmul no batch".to_string(),
-        ))
+        crate::bail!("no metal support for matmul no batch");
     }
 
     fn copy2d(
